@@ -1,5 +1,5 @@
 pkgname=yukigram-git
-pkgver=1.1.10.r17830.a187358b35
+pkgver=1.1.11.r17881.35495a8238
 pkgrel=1
 pkgdesc='64gram fork with some enhancements, which itself is Telegram Desktop fork'
 arch=('x86_64')
@@ -23,13 +23,15 @@ sha512sums=('SKIP'
 
 
 pkgver() {
+    [[ -z "$HEAD" ]] && HEAD=origin/HEAD
     cd "$pkgname"
     local version="$(grep AppVersionStr Telegram/SourceFiles/core/version.h | sed 's|.;||' | sed 's|constexpr auto AppVersionStr = .||')"
-    printf "%s.r%s.%s" "$version" "$(git rev-list --count HEAD)" "$(git rev-parse --short=10 HEAD)"
+    printf "%s.r%s.%s" "$version" "$(git rev-list --count $HEAD)" "$(git rev-parse --short=10 $HEAD)"
 }
 
 prepare() {
     cd "$pkgname"
+    git checkout $HEAD
     git submodule deinit --force --all
     git submodule update --init --recursive
     patch -Np1 < ../fix-lzma.patch
