@@ -1,5 +1,5 @@
 pkgname=yukigram-git
-pkgver=1.1.11.r17881.35495a8238
+pkgver=1.1.12.r17960.03fe6e0c51
 pkgrel=1
 pkgdesc='64gram fork with some enhancements, which itself is Telegram Desktop fork'
 arch=('x86_64')
