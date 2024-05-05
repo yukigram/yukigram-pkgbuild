@@ -1,5 +1,5 @@
 pkgname=yukigram-git
-pkgver=1.1.16.r18486.147eebbb9d
+pkgver=1.1.21.r18766.e031444284
 pkgrel=1
 pkgdesc='64gram fork with some enhancements, which itself is Telegram Desktop fork'
 arch=('x86_64')
@@ -31,9 +31,8 @@ pkgver() {
 
 prepare() {
     cd "$pkgname"
-    git checkout $HEAD
-    git submodule deinit --force --all
-    git submodule update --init --recursive
+    git reset --hard $HEAD
+    git submodule update --force --init --recursive
     patch -Np1 < ../fix-lzma.patch
     patch -Np1 < ../bundled-tgvoip.patch
 }
@@ -55,13 +54,8 @@ build() {
         -S $pkgname \
         -G Ninja \
         -D CMAKE_INSTALL_PREFIX="/usr" \
-        -D CMAKE_BUILD_TYPE=Release \
-        -D CMAKE_INTERPROCEDURAL_OPTIMIZATION=ON \
-        -D CMAKE_C_FLAGS_DEBUG="" \
-        -D CMAKE_CXX_FLAGS_DEBUG="" \
-        -D CMAKE_C_FLAGS="" \
-        -D CMAKE_CXX_FLAGS="" \
-        -D CMAKE_EXE_LINKER_FLAGS="-s" \
+        -D CMAKE_INTERPROCEDURAL_OPTIMIZATION=OFF \
+        -D CMAKE_EXE_LINKER_FLAGS="-Wl,--copy-dt-needed-entries" \
         -D TDESKTOP_API_ID="$API_ID" \
         -D TDESKTOP_API_HASH="$API_HASH" \
         -D DESKTOP_APP_DISABLE_AUTOUPDATE=ON \
