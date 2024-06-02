@@ -1,5 +1,5 @@
 pkgname=yukigram-git
-pkgver=1.1.24.r18888.5c7f1e8233
+pkgver=1.1.25.r19083.e9a0d86d40
 pkgrel=1
 pkgdesc='64gram fork with some enhancements, which itself is Telegram Desktop fork'
 arch=('x86_64')
@@ -15,9 +15,11 @@ makedepends=('cmake' 'git' 'ninja' 'python' 'range-v3' 'tl-expected' 'microsoft-
 optdepends=('webkit2gtk: embedded browser features'
             'xdg-desktop-portal: desktop integration')
 source=("$pkgname::git+https://github.com/yukigram/yukigram.git"
-        "fix-lzma.patch"
+        "fix-lzma-1.patch"
+        "fix-lzma-2.patch"
         "bundled-tgvoip.patch")
 sha512sums=('SKIP'
+            'SKIP'
             'SKIP'
             'SKIP')
 
@@ -25,7 +27,7 @@ sha512sums=('SKIP'
 pkgver() {
     [[ -z "$HEAD" ]] && HEAD=origin/HEAD
     cd "$pkgname"
-    local version="$(grep AppVersionStr Telegram/SourceFiles/core/version.h | sed 's|.;||' | sed 's|constexpr auto AppVersionStr = .||')"
+    local version="$(grep AppVersionStr Telegram/SourceFiles/core/version.h | sed -e 's|.;||' -e 's|constexpr auto AppVersionStr = .||')"
     printf "%s.r%s.%s" "$version" "$(git rev-list --count $HEAD)" "$(git rev-parse --short=10 $HEAD)"
 }
 
@@ -33,7 +35,8 @@ prepare() {
     cd "$pkgname"
     git reset --hard $HEAD
     git submodule update --force --init --recursive
-    patch -Np1 < ../fix-lzma.patch
+    patch -Np1 < ../fix-lzma-1.patch
+    patch -Np1 < ../fix-lzma-2.patch
     patch -Np1 < ../bundled-tgvoip.patch
 }
 
