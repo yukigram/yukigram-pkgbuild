@@ -1,5 +1,5 @@
 pkgname=yukigram-git
-pkgver=1.1.28.r19135.01fb06a0a4
+pkgver=1.1.28.r19137.7a3ce1aad4
 pkgrel=1
 pkgdesc='64gram fork with some enhancements, which itself is Telegram Desktop fork'
 arch=('x86_64')
@@ -11,7 +11,7 @@ depends=('hunspell' 'ffmpeg' 'hicolor-icon-theme' 'lz4' 'minizip' 'openal'
          'openssl' 'protobuf' 'glib2' 'libsigc++-3.0' 'glibmm-2.68' 'kcoreaddons')
 makedepends=('cmake' 'git' 'ninja' 'python' 'range-v3' 'tl-expected' 'microsoft-gsl' 'meson'
              'extra-cmake-modules' 'wayland-protocols' 'plasma-wayland-protocols' 'libtg_owt'
-             'gobject-introspection' 'boost' 'fmt' 'mm-common' 'perl-xml-parser')
+             'gobject-introspection' 'boost' 'fmt' 'mm-common' 'perl-xml-parser' 'glib2-devel')
 optdepends=('webkit2gtk: embedded browser features'
             'xdg-desktop-portal: desktop integration')
 source=("$pkgname::git+https://github.com/yukigram/yukigram.git"
