@@ -1,6 +1,6 @@
 pkgname=yukigram-git
-pkgver=1.1.34.r19642.d96de9aa12
-pkgrel=1
+pkgver=1.1.58.r20837.e612f43dd9
+pkgrel=5
 pkgdesc='64gram fork with some enhancements, which itself is Telegram Desktop fork'
 arch=('x86_64')
 url="https://t.me/sylfngram"
@@ -27,7 +27,7 @@ sha512sums=('SKIP'
 pkgver() {
     [[ -z "$HEAD" ]] && HEAD=origin/HEAD
     cd "$pkgname"
-    local version="$(grep AppVersionStr Telegram/SourceFiles/core/version.h | sed -e 's|.;||' -e 's|constexpr auto AppVersionStr = .||')"
+    local version="$(grep AppVersionStr Telegram/SourceFiles/core/version.h | head -1 | sed -e 's|.;||' -e 's|constexpr auto AppVersionStr = .||')"
     printf "%s.r%s.%s" "$version" "$(git rev-list --count $HEAD)" "$(git rev-parse --short=10 $HEAD)"
 }
 
